@@ -3,7 +3,7 @@ function letras(texto) {
         icon: 'error',
         iconColor: '#FF030F',
         background: '#000000',
-        title: '¡Vaya!',
+        title: '¡Oops...!',
         color: '#f2f2f2',
         confirmButtonColor: '#245FE6',
         text: texto,
@@ -37,10 +37,10 @@ function encriptar() {
     let text = document.getElementById("txa-entrada").value.trim();
 
     if (text === '') {
-        letras('Ingrese un mensaje a encriptar o desencriptar');
+        letras('Enter a message to encrypt or decrypt');
     } else {
         if (/[^a-zñ ]/.test(text)) {
-            letras('Escribe solo letras minusculas y sin acento');
+            letras('Write only lowercase letters and no accents');
         } else {
             let txaResultado = document.getElementById("txa-resultado");
             txaResultado.value = encriptarTexto(text);
@@ -55,10 +55,10 @@ function desencriptar() {
     let text = document.getElementById("txa-entrada").value.trim();
 
     if (text === '') {
-        letras('Ingrese un mensaje a encriptar o desencriptar');
+        letras('Enter a message to encrypt or decrypt');
     } else {
         if (/[^a-zñ ]/.test(text)) {
-            letras('Escribe solo letras minusculas y sin acento');
+            letras('Write only lowercase letters and no accents');
         } else {
             let txaResultado = document.getElementById("txa-resultado");
             txaResultado.value = desencriptarTexto(text);
@@ -69,18 +69,28 @@ function desencriptar() {
     }
 }
 
-function copiar() {
-    console.log('asdsadas')
-    let txaResultado = document.getElementById("txa-resultado");
-    // Obtener el texto que se debe copiar
-    const textoACopiar = txaResultado.value;
 
-    navigator.clipboard.writeText(textoACopiar)
-        .then(() => {
-            letras('Se copio con exito ');
-        })
-        .catch(() => {
-            letras('No se copio con exito ');
-        });
+function copio() {
+    Swal.fire({
+        icon: 'success',
+        iconColor: '#36CA31',
+        background: '#000000',
+        title: 'It was copied successfully',
+        color: '#f2f2f2',
+        confirmButtonColor: '#245FE6',
+        showConfirmButton: false,
+        timer: 1500
+    });
 }
 
+function copiar() {
+    let txaResultado = document.getElementById("txa-resultado");
+    const textoACopiar = txaResultado.value;
+    navigator.clipboard.writeText(textoACopiar)
+        .then(() => {
+            copio();
+        })
+        .catch(() => {
+            letras('Did not copy successfully');
+        });
+}
